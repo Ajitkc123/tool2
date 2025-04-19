@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compression Tool | Optimize Your Images Online</title>
+    <meta name="description" content="Free online image compression tool to optimize and resize your images with adjustable quality settings. Reduce file size while maintaining quality.">
+    <meta name="keywords" content="image compression, image optimizer, reduce image size, compress images, image compression tool">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Image Compression Tool | Optimize Your Images Online">
+    <meta property="og:description" content="Free online image compression tool to optimize and resize your images with adjustable quality settings.">
+    <meta property="og:type" content="website">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/svgs/solid/compress.svg">
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-compress text-2xl mr-3"></i>
+                    <h1 class="text-2xl md:text-3xl font-bold">Image Compression Tool</h1>
+                </div>
+                <nav>
+                    <ul class="flex space-x-6">
+                        <li><a href="#" class="hover:text-blue-200 transition">Home</a></li>
+                        <li><a href="#how-it-works" class="hover:text-blue-200 transition">How It Works</a></li>
+                        <li><a href="#faq" class="hover:text-blue-200 transition">FAQ</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-10">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Compress Images Without Losing Quality</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">Reduce your image file size while maintaining visual quality. Perfect for websites, social media, and email attachments.</p>
+        </div>
+
+        <!-- Top Ad Space -->
+        <div class="mx-auto mb-10 bg-gray-200 p-3 text-center rounded-lg max-w-4xl" id="ad-top">
+            <!-- Google AdSense Ad Unit -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="YOUR-AD-CLIENT-ID"
+                data-ad-slot="YOUR-AD-SLOT-ID"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <p class="text-gray-500 text-xs mt-1">Advertisement</p>
+        </div>
+
+        <!-- Main Tool Section -->
+        <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto mb-12">
+            <div class="flex flex-col space-y-8">
+                <!-- Upload Area -->
+                <div class="upload-area border-2 border-dashed border-blue-300 rounded-lg p-8 text-center cursor-pointer hover:bg-blue-50 transition" id="upload-area">
+                    <i class="fas fa-cloud-upload-alt text-blue-500 text-5xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Drop your image here or click to browse</h3>
+                    <p class="text-gray-500 mb-4">Supports JPG, PNG, WEBP (Max: 10MB)</p>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition">
+                        Select Image
+                    </button>
+                    <input type="file" id="image-input" accept="image/*" class="hidden">
+                </div>
+
+                <!-- Compression Settings -->
+                <div id="compression-settings" class="hidden">
+                    <h3 class="text-xl font-semibold mb-4">Compression Settings</h3>
+                    
+                    <div class="mb-6">
+                        <label for="quality-slider" class="block text-gray-700 mb-2">Quality Level: <span id="quality-value">80%</span></label>
+                        <input type="range" id="quality-slider" min="1" max="100" value="80" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>Smaller File</span>
+                            <span>Better Quality</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div id="original-image-container" class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 p-2 text-center font-medium">Original Image</div>
+                            <div class="p-4 flex justify-center">
+                                <img id="original-image-preview" class="max-h-64 object-contain" src="" alt="Original image preview">
+                            </div>
+                            <div class="bg-gray-100 p-2 text-center" id="original-size">Size: - KB</div>
+                        </div>
+                        
+                        <div id="compressed-image-container" class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 p-2 text-center font-medium">Compressed Image</div>
+                            <div class="p-4 flex justify-center">
+                                <img id="compressed-image-preview" class="max-h-64 object-contain" src="" alt="Compressed image preview">
+                            </div>
+                            <div class="bg-gray-100 p-2 text-center" id="compressed-size">Size: - KB</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button id="compress-btn" class="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-compress mr-2"></i> Compress Image
+                        </button>
+                        <button id="download-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition flex items-center justify-center" disabled>
+                            <i class="fas fa-download mr-2"></i> Download Image
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 text-center text-sm text-gray-500" id="compression-stats"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Side Ad Space -->
+        <div class="mx-auto mb-10 bg-gray-200 p-3 text-center rounded-lg max-w-4xl" id="ad-side">
+            <!-- Google AdSense Ad Unit -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="YOUR-AD-CLIENT-ID"
+                data-ad-slot="YOUR-AD-SLOT-ID"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <p class="text-gray-500 text-xs mt-1">Advertisement</p>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="bg-gray-50 py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-upload text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">1. Upload Image</h3>
+                    <p class="text-gray-600">Select or drag & drop your image file. We support JPG, PNG, and WEBP formats.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-sliders-h text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">2. Adjust Settings</h3>
+                    <p class="text-gray-600">Choose your preferred compression level with our quality slider.</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-download text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">3. Download</h3>
+                    <p class="text-gray-600">Compress your image and download the optimized version instantly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+            
+            <div class="max-w-3xl mx-auto divide-y">
+                <div class="py-5">
+                    <h3 class="text-xl font-semibold mb-2">Is this tool completely free?</h3>
+                    <p class="text-gray-600">Yes, our image compression tool is 100% free to use with no hidden charges or registration required.</p>
+                </div>
+                
+                <div class="py-5">
+                    <h3 class="text-xl font-semibold mb-2">What image formats are supported?</h3>
+                    <p class="text-gray-600">Currently, we support JPEG, PNG, and WEBP formats for compression.</p>
+                </div>
+                
+                <div class="py-5">
+                    <h3 class="text-xl font-semibold mb-2">Is there a file size limit?</h3>
+                    <p class="text-gray-600">Yes, the maximum file size for upload is 10MB per image.</p>
+                </div>
+                
+                <div class="py-5">
+                    <h3 class="text-xl font-semibold mb-2">Are my images stored on your servers?</h3>
+                    <p class="text-gray-600">No. All compression happens directly in your browser. Your images are never uploaded to our servers, ensuring your privacy.</p>
+                </div>
+                
+                <div class="py-5">
+                    <h3 class="text-xl font-semibold mb-2">How does the quality slider work?</h3>
+                    <p class="text-gray-600">The quality slider allows you to balance between file size and image quality. Lower values result in smaller files with reduced quality, while higher values maintain better quality with larger file sizes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Ad Space -->
+    <div class="container mx-auto px-4 mb-10">
+        <div class="bg-gray-200 p-3 text-center rounded-lg" id="ad-bottom">
+            <!-- Google AdSense Ad Unit -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="YOUR-AD-CLIENT-ID"
+                data-ad-slot="YOUR-AD-SLOT-ID"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <p class="text-gray-500 text-xs mt-1">Advertisement</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center">
+                        <i class="fas fa-compress text-xl mr-2"></i>
+                        <span class="text-xl font-bold">Image Compression Tool</span>
+                    </div>
+                    <p class="text-gray-400 mt-2">© 2023 Image Compression Tool. All rights reserved.</p>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-gray-700 text-center text-gray-400">
+                <div class="flex flex-wrap justify-center space-x-4">
+                    <a href="#" class="hover:text-white transition mb-2">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition mb-2">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition mb-2">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const uploadArea = document.getElementById('upload-area');
+            const imageInput = document.getElementById('image-input');
+            const compressionSettings = document.getElementById('compression-settings');
+            const qualitySlider = document.getElementById('quality-slider');
+            const qualityValue = document.getElementById('quality-value');
+            const originalImagePreview = document.getElementById('original-image-preview');
+            const compressedImagePreview = document.getElementById('compressed-image-preview');
+            const originalSizeElement = document.getElementById('original-size');
+            const compressedSizeElement = document.getElementById('compressed-size');
+            const compressBtn = document.getElementById('compress-btn');
+            const downloadBtn = document.getElementById('download-btn');
+            const compressionStats = document.getElementById('compression-stats');
+            
+            let originalImage = null;
+            let compressedImageData = null;
+            let originalSizeInBytes = 0;
+            
+            // Update quality value display
+            qualitySlider.addEventListener('input', function() {
+                qualityValue.textContent = this.value + '%';
+            });
+            
+            // Handle upload area click
+            uploadArea.addEventListener('click', function() {
+                imageInput.click();
+            });
+            
+            // Handle drag and drop
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('border-blue-500', 'bg-blue-50');
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                this.classList.remove('border-blue-500', 'bg-blue-50');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('border-blue-500', 'bg-blue-50');
+                
+                if (e.dataTransfer.files.length) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+            
+            // Handle file selection
+            imageInput.addEventListener('change', function() {
+                if (this.files.length) {
+                    handleFile(this.files[0]);
+                }
+            });
+            
+            // Process the selected file
+            function handleFile(file) {
+                // Reset
+                downloadBtn.disabled = true;
+                compressedImagePreview.src = '';
+                compressedSizeElement.textContent = 'Size: - KB';
+                compressionStats.textContent = '';
+                
+                // Validate file
+                if (!file.type.match('image.*')) {
+                    alert('Please select an image file (JPG, PNG, WEBP)');
+                    return;
+                }
+                
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size exceeds 10MB limit');
+                    return;
+                }
+                
+                // Show compression settings
+                compressionSettings.classList.remove('hidden');
+                
+                // Display original image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    originalImage = new Image();
+                    originalImage.onload = function() {
+                        originalImagePreview.src = this.src;
+                        originalSizeInBytes = file.size;
+                        originalSizeElement.textContent = `Size: ${formatFileSize(file.size)}`;
+                    };
+                    originalImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            // Compress image
+            compressBtn.addEventListener('click', function() {
+                if (!originalImage) return;
+                
+                const quality = parseInt(qualitySlider.value) / 100;
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Maintain aspect ratio
+                canvas.width = originalImage.width;
+                canvas.height = originalImage.height;
+                
+                // Draw image on canvas
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+                
+                // Get compressed image data
+                compressedImageData = canvas.toDataURL('image/jpeg', quality);
+                compressedImagePreview.src = compressedImageData;
+                
+                // Calculate compressed size
+                const base64String = compressedImageData.split(',')[1];
+                const compressedSizeInBytes = Math.round((base64String.length * 3) / 4);
+                compressedSizeElement.textContent = `Size: ${formatFileSize(compressedSizeInBytes)}`;
+                
+                // Calculate savings
+                const savings = originalSizeInBytes - compressedSizeInBytes;
+                const savingsPercentage = Math.round((savings / originalSizeInBytes) * 100);
+                
+                compressionStats.innerHTML = `
+                    <span class="text-green-600 font-medium">
+                        Reduced by ${formatFileSize(savings)} (${savingsPercentage}% smaller)
+                    </span>
+                `;
+                
+                // Enable download button
+                downloadBtn.disabled = false;
+            });
+            
+            // Download compressed image
+            downloadBtn.addEventListener('click', function() {
+                if (!compressedImageData) return;
+                
+                const link = document.createElement('a');
+                link.download = 'compressed-image.jpg';
+                link.href = compressedImageData;
+                link.click();
+            });
+            
+            // Format file size
+            function formatFileSize(bytes) {
+                if (bytes < 1024) {
+                    return bytes + ' bytes';
+                } else if (bytes < 1024 * 1024) {
+                    return (bytes / 1024).toFixed(2) + ' KB';
+                } else {
+                    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+                }
+            }
+        });
+    </script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Image Compression Tool",
+        "url": "https://yourwebsite.com/image-compression-tool",
+        "description": "Free online image compression tool to optimize and resize your images with adjustable quality settings.",
+        "applicationCategory": "Multimedia",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>
